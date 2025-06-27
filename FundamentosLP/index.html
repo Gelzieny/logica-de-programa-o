@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudo de Lógica Proposicional</title>
+  <!-- Inclui o Tailwind CSS Play CDN para desenvolvimento rápido. Para produção, instale o Tailwind corretamente. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Configuração customizada do Tailwind CSS para estender cores, se necessário. -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'highlight-true': '#dcfce7', /* Verde claro para destacar linhas verdadeiras */
+            'bg-dark': '#1a202c',
+            'text-light': '#f7fafc',
+            'table-header': '#2d3748',
+            'table-border': '#4a5568',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Estilos adicionais para renderização de tabelas e símbolos LaTeX */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      table-layout: auto;
+      /* Permite que as colunas se ajustem ao conteúdo */
+    }
+
+    th,
+    td {
+      padding: 0.75rem 1rem;
+      text-align: center;
+      border: 1px solid theme('colors.table-border');
+      white-space: nowrap;
+      /* Impede que o texto quebre em várias linhas em células pequenas */
+    }
+
+    th {
+      background-color: theme('colors.table-header');
+      color: theme('colors.text-light');
+      font-weight: bold;
+    }
+
+    /* Classe para destacar as linhas onde a proposição composta é verdadeira */
+    .highlight-true {
+      background-color: theme('colors.highlight-true');
+    }
+
+    /* Estilo para símbolos lógicos para uma aparência mais matemática */
+    .latex-symbol {
+      font-family: 'Cambria Math', 'Times New Roman', serif;
+      font-size: 1.1em;
+    }
+
+    /* Responsividade geral da página */
+    body {
+      font-family: 'Inter', sans-serif;
+      /* Usando Inter conforme instrução */
+    }
+
+    .container {
+      max-width: 100%;
+      padding: 1rem;
+      /* Ajuste para telas pequenas */
+    }
+
+    @media (min-width: 768px) {
+
+      /* md breakpoint */
+      .container {
+        max-width: 48rem;
+        /* Tailwind's max-w-2xl */
+      }
+    }
+
+    @media (min-width: 1024px) {
+
+      /* lg breakpoint */
+      .container {
+        max-width: 64rem;
+        /* Tailwind's max-w-4xl */
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans leading-relaxed antialiased">
+
+  <div class="container mx-auto p-4 md:p-8 bg-white shadow-lg rounded-lg my-5 md:my-10">
+    <h1 class="text-3xl md:text-4xl font-bold text-center mb-4 md:mb-6 text-blue-700">Estudo de Lógica Proposicional:
+      Representações e Tabelas Verdade</h1>
+
+    <p class="text-base md:text-lg mb-4">
+      Este documento contém uma coleção de exemplos de frases em linguagem natural, suas representações em lógica
+      proposicional e as respectivas tabelas verdade. O objetivo é demonstrar a aplicação dos conectivos lógicos (<span
+        class="latex-symbol">&and;</span>, <span class="latex-symbol">&or;</span>, <span
+        class="latex-symbol">&rarr;</span>, <span class="latex-symbol">&harr;</span>) e visualizar todas as combinações
+      de valores-verdade para as proposições envolvidas. As linhas onde a proposição composta final é **Verdadeira (V)**
+      estão destacadas.
+    </p>
+
+    <hr class="my-6 md:my-8 border-gray-300">
+
+    <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 mb-4 md:mb-6">O que é Lógica Booleana?</h2>
+    <p class="text-base md:text-lg mb-4 md:mb-6">
+      A **lógica booleana** é fundamental na programação e na computação, sendo usada para tomar decisões baseadas em
+      condições de verdadeiro ou falso. Ela opera com apenas dois valores: **Verdadeiro (True)** ou **Falso (False)**.
+      Por exemplo:
+    </p>
+    <ul class="list-disc list-inside text-base md:text-lg mb-6 md:mb-8 space-y-2">
+      <li>Um usuário pode acessar o sistema? **Sim** ou **Não**</li>
+      <li>Esse número é par? **Sim** ou **Não**</li>
+      <li>O pagamento foi aprovado? **Sim** ou **Não**</li>
+    </ul>
+    <p class="text-base md:text-lg">
+      Essas decisões binárias são a base para o funcionamento de algoritmos e sistemas complexos.
+    </p>
+
+    <hr class="my-6 md:my-8 border-gray-300">
+
+    <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 mb-4 md:mb-6">Conteúdo</h2>
+    <p class="text-base md:text-lg mb-4">
+      Cada seção abaixo apresenta uma frase, suas proposições atômicas, a representação lógica e a tabela verdade
+      completa.
+    </p>
+
+    <!-- Exemplo 1 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">1. Eu estudei para a prova e fiz todos os
+        exercícios.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu estudei para a prova.</li>
+        <li>**Q**: Eu fiz todos os exercícios.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&and;</span> Q
+      </p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>P <span class="latex-symbol">&and;</span> Q</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>V</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 2 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">2. Eu vou ao cinema ou fico em casa
+        assistindo séries.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu vou ao cinema.</li>
+        <li>**Q**: Eu fico em casa assistindo séries.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&or;</span> Q
+      </p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>P <span class="latex-symbol">&or;</span> Q</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 3 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">3. Se eu acordar cedo, então conseguirei
+        pegar o ônibus.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu acordar cedo.</li>
+        <li>**Q**: Eu conseguirei pegar o ônibus.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&rarr;</span>
+        Q</p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>P <span class="latex-symbol">&rarr;</span> Q</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 4 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">4. Se eu estudar muito, então passarei na
+        prova e ganharei um presente.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu estudar muito.</li>
+        <li>**Q**: Eu passarei na prova.</li>
+        <li>**R**: Eu ganharei um presente.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&rarr;</span>
+        (Q <span class="latex-symbol">&and;</span> R)</p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>R</th>
+              <th>Q <span class="latex-symbol">&and;</span> R</th>
+              <th>P <span class="latex-symbol">&rarr;</span> (Q <span class="latex-symbol">&and;</span> R)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 5 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">5. Eu vou jogar videogame ou vou estudar
+        lógica de programação.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu vou jogar videogame.</li>
+        <li>**Q**: Eu vou estudar lógica de programação.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&or;</span> Q
+      </p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>P <span class="latex-symbol">&or;</span> Q</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 6 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">6. Eu comi pizza e tomei refrigerante.
+      </h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu comi pizza.</li>
+        <li>**Q**: Eu tomei refrigerante.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&and;</span> Q
+      </p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>P <span class="latex-symbol">&and;</span> Q</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>V</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 7 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">7. Se eu tiver dinheiro, então viajarei
+        nas férias.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu tiver dinheiro.</li>
+        <li>**Q**: Eu viajarei nas férias.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&rarr;</span>
+        Q</p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>P <span class="latex-symbol">&rarr;</span> Q</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 8 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">8. Eu lerei um livro se e somente se
+        terminar meu trabalho.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu lerei um livro.</li>
+        <li>**Q**: Eu terminar meu trabalho.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&harr;</span>
+        Q</p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>P <span class="latex-symbol">&harr;</span> Q</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>V</td>
+              <td>F</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 9 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">9. Se estiver sol, então irei à praia ou
+        ao parque.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Estiver sol.</li>
+        <li>**Q**: Irei à praia.</li>
+        <li>**R**: Irei ao parque.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&rarr;</span>
+        (Q <span class="latex-symbol">&or;</span> R)</p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>R</th>
+              <th>Q <span class="latex-symbol">&or;</span> R</th>
+              <th>P <span class="latex-symbol">&rarr;</span> (Q <span class="latex-symbol">&or;</span> R)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>V</td>
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Exemplo 10 -->
+    <div class="mb-8 md:mb-10 p-4 md:p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+      <h3 class="text-xl md:text-2xl font-semibold text-blue-600 mb-2 md:mb-3">10. Eu farei um bolo se e somente se
+        comprar os ingredientes.</h3>
+      <p class="text-base md:text-lg mb-2">**Proposições:**</p>
+      <ul class="list-disc list-inside ml-4 md:ml-5 text-base md:text-lg mb-3 md:mb-4">
+        <li>**P**: Eu farei um bolo.</li>
+        <li>**Q**: Eu comprar os ingredientes.</li>
+      </ul>
+      <p class="text-base md:text-lg mb-3 md:mb-4">**Representação Lógica:** P <span class="latex-symbol">&harr;</span>
+        Q</p>
+      <div class="overflow-x-auto rounded-md">
+        <table class="min-w-full bg-white shadow-md">
+          <thead>
+            <tr>
+              <th>P</th>
+              <th>Q</th>
+              <th>P <span class="latex-symbol">&harr;</span> Q</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-true">
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>F</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>V</td>
+              <td>F</td>
+            </tr>
+            <tr class="highlight-true">
+              <td>F</td>
+              <td>F</td>
+              <td>V</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr class="my-6 md:my-8 border-gray-300">
+
+    <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 mb-4 md:mb-6">Como Usar Este Documento</h2>
+    <p class="text-base md:text-lg mb-4">
+      Este documento HTML é principalmente para consulta e estudo. Você pode:
+    </p>
+    <ul class="list-disc list-inside text-base md:text-lg space-y-2">
+      <li>Abrir o arquivo `index.html` (ou como você o nomear) diretamente em seu navegador.</li>
+      <li>Usar como referência para seus próprios estudos ou projetos de lógica.</li>
+    </ul>
+  </div>
+
+</body>
+
+</html>
